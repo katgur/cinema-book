@@ -1,7 +1,7 @@
-import MoviesList from "./components/MoviesList";
+import MovieDetails from "./components/MovieDetails";
 
 function App() {
-  return <MoviesList />;
+  return <MovieDetails id={238} />;
 }
 
 export default App;
