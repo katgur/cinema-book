@@ -1,63 +1,65 @@
-import { useEffect, useState } from "react";
 import movieService from "../../services/movie";
-import {
-  MovieDetails as MovieDetailsType,
-  MoviePreview as MoviePreviewType,
-} from "../../types";
 import {
   mapServerMovieDetailsToMovieDetails,
   mapServerMovieToMovie,
 } from "../../mappers";
 import MoviePreview from "../MoviePreview";
+import { useQuery } from "@tanstack/react-query";
 
 interface MovieDetailsProps {
   id: number;
 }
 
 function MovieDetails({ id }: MovieDetailsProps) {
-  const [movie, setMovie] = useState<
-    (MovieDetailsType & { recommendations: MoviePreviewType[] }) | null
-  >(null);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["movie"],
+    queryFn: () =>
+      Promise.all([
+        movieService.getMovieById(id),
+        movieService.getMovieRecommendations(id),
+      ]),
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
 
-  useEffect(() => {
-    Promise.all([
-      movieService.getMovieById(id),
-      movieService.getMovieRecommendations(id),
-    ])
-      .then((response) => {
-        return {
-          ...mapServerMovieDetailsToMovieDetails(response[0]),
-          recommendations: response[1].results.map(mapServerMovieToMovie),
-        };
-      })
-      .then((movie) => {
-        setMovie(movie);
-      });
-  }, [id]);
+  if (isPending) {
+    return <p>Loading...</p>;
+  }
 
-  if (!movie) {
+  if (error) {
+    return <p>{error.message}</p>;
+  }
+
+  if (!data) {
     return;
   }
 
+  const [serverMovieDetails, recommendations] = data;
+
+  const movieDetails = mapServerMovieDetailsToMovieDetails(serverMovieDetails);
+
   return (
     <article>
-      <h1>{movie.title}</h1>
-      <p>{movie.overview}</p>
-      <p>Жанр: {movie.genres}</p>
-      <p>Бюджет: ${movie.budget}</p>
-      <p>Выручка: ${movie.revenue}</p>
-      <p>Дата релиза: {movie.releaseDate}</p>
-      <p>Продолжительность: {movie.runtime} минуты</p>
+      <h1>{movieDetails.title}</h1>
+      <p>{movieDetails.overview}</p>
+      <p>Жанр: {movieDetails.genres}</p>
+      <p>Бюджет: ${movieDetails.budget}</p>
+      <p>Выручка: ${movieDetails.revenue}</p>
+      <p>Дата релиза: {movieDetails.releaseDate}</p>
+      <p>Продолжительность: {movieDetails.runtime} минуты</p>
       <p>
-        {movie.voteAverage} / {movie.voteCount}
+        {movieDetails.voteAverage} / {movieDetails.voteCount}
       </p>
-      <img src={movie.posterUrl} alt={`Постер для фильма ${movie.title}`} />
+      <img
+        src={movieDetails.posterUrl}
+        alt={`Постер для фильма ${movieDetails.title}`}
+      />
       <ul>
         <h2>Похожие фильмы</h2>
         <ul>
-          {movie.recommendations.map((recommendation) => (
+          {recommendations.results.map((recommendation) => (
             <li key={recommendation.id}>
-              <MoviePreview movie={recommendation} />
+              <MoviePreview movie={mapServerMovieToMovie(recommendation)} />
             </li>
           ))}
         </ul>

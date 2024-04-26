@@ -1,28 +1,33 @@
-import { useEffect, useState } from "react";
-import { MoviePreview as MoviePreviewType } from "../../types";
 import movieService from "../../services/movie";
 import { mapServerMovieToMovie } from "../../mappers";
 import MoviePreview from "../MoviePreview";
+import { useQuery } from "@tanstack/react-query";
 
 function MoviesList() {
-  const [movies, setMovies] = useState<MoviePreviewType[] | null>(null);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["movies"],
+    queryFn: () => movieService.getTopMovies(1),
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
 
-  useEffect(() => {
-    movieService
-      .getTopMovies(1)
-      .then((response) => response.results.map(mapServerMovieToMovie))
-      .then((movies) => setMovies(movies));
-  }, []);
+  if (isPending) {
+    return <p>Loading...</p>;
+  }
 
-  if (!movies) {
+  if (error) {
+    return <p>{error.message}</p>;
+  }
+
+  if (!data || !data.results) {
     return;
   }
 
   return (
     <ul>
-      {movies.map((movie) => (
+      {data.results.map((movie) => (
         <li key={movie.id}>
-          <MoviePreview movie={movie} />
+          <MoviePreview movie={mapServerMovieToMovie(movie)} />
         </li>
       ))}
     </ul>
