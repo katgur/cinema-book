@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   GetMovieByIdResponse,
   GetTopMoviesResponse,
@@ -10,69 +11,48 @@ import {
 
 const url = "https://api.themoviedb.org/3/movie";
 
-async function getTopMovies(page: number): Promise<GetTopMoviesResponse> {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-    },
-  };
-  const response = await fetch(
-    `${url}/top_rated?language=ru&page=${page}`,
-    options
-  );
-  if (!response.ok) {
-    throw new Error(response.statusText);
+axios.interceptors.request.use(function (config) {
+  const headers = config.headers;
+  headers.Authorization = `Bearer ${import.meta.env.VITE_API_KEY}`;
+  return {
+    ...config,
+    headers,
   }
-  const json = await response.json();
-  if (!isGetTopMoviesResponse(json)) {
+}, function (error) {
+  return Promise.reject(error);
+});
+
+async function getTopMovies(page: number): Promise<GetTopMoviesResponse> {
+  const response = await axios.get(
+    `${url}/top_rated?language=ru&page=${page}`,
+  );
+  const data = response.data;
+  if (!isGetTopMoviesResponse(data)) {
     throw new Error("Wrong data from server");
   }
-  return json;
+  return data;
 }
 
 async function getMovieById(id: number): Promise<GetMovieByIdResponse> {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-    },
-  };
-  const response = await fetch(`${url}/${id}?language=ru`, options);
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-  const json = await response.json();
-  if (!isGetMovieByIdResponse(json)) {
+  const response = await axios.get(`${url}/${id}?language=ru`);
+  const data = response.data;
+  if (!isGetMovieByIdResponse(data)) {
     throw new Error("Wrong data from server");
   }
-  return json;
+  return data;
 }
 
 async function getMovieRecommendations(
   id: number
 ): Promise<GetMovieRecommendationsResponse> {
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-    },
-  };
-  const response = await fetch(
+  const response = await axios.get(
     `${url}/${id}/recommendations?language=ru`,
-    options
   );
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-  const json = await response.json();
-  if (!isGetTopMoviesResponse(json)) {
+  const data = response.data;
+  if (!isGetTopMoviesResponse(data)) {
     throw new Error("Wrong data from server");
   }
-  return json;
+  return data;
 }
 
 export default {
