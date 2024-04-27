@@ -5,19 +5,21 @@ import {
 } from "../../mappers";
 import MoviePreview from "../MoviePreview";
 import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router";
 
-interface MovieDetailsProps {
-  id: number;
-}
-
-function MovieDetails({ id }: MovieDetailsProps) {
+function MovieDetails() {
+  const { id } = useParams();
   const { isPending, error, data } = useQuery({
-    queryKey: ["movie"],
-    queryFn: () =>
-      Promise.all([
+    queryKey: ["movie", id],
+    queryFn: () => {
+      if (!id) {
+        throw new Error("Wrong movie id provided");
+      }
+      return Promise.all([
         movieService.getMovieById(id),
         movieService.getMovieRecommendations(id),
-      ]),
+      ]);
+    },
     retry: false,
     refetchOnWindowFocus: false,
   });

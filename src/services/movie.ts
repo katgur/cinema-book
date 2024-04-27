@@ -33,7 +33,7 @@ async function getTopMovies(page: number): Promise<GetTopMoviesResponse> {
   return data;
 }
 
-async function getMovieById(id: number): Promise<GetMovieByIdResponse> {
+async function getMovieById(id: string): Promise<GetMovieByIdResponse> {
   const response = await axios.get(`${url}/${id}?language=ru`);
   const data = response.data;
   if (!isGetMovieByIdResponse(data)) {
@@ -43,7 +43,7 @@ async function getMovieById(id: number): Promise<GetMovieByIdResponse> {
 }
 
 async function getMovieRecommendations(
-  id: number
+  id: string
 ): Promise<GetMovieRecommendationsResponse> {
   const response = await axios.get(
     `${url}/${id}/recommendations?language=ru`,
