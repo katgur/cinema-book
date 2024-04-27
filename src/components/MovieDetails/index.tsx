@@ -1,11 +1,8 @@
 import movieService from "../../services/movie";
-import {
-  mapServerMovieDetailsToMovieDetails,
-  mapServerMovieToMovie,
-} from "../../mappers";
-import MoviePreview from "../MoviePreview";
+import { mapServerMovieDetailsToMovieDetails } from "../../mappers";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
+import MovieRecommendationsList from "./MovieRecommendationsList";
 
 function MovieDetails() {
   const { id } = useParams();
@@ -13,12 +10,9 @@ function MovieDetails() {
     queryKey: ["movie", id],
     queryFn: () => {
       if (!id) {
-        throw new Error("Wrong movie id provided");
+        throw new Error("Wrong movie id");
       }
-      return Promise.all([
-        movieService.getMovieById(id),
-        movieService.getMovieRecommendations(id),
-      ]);
+      return movieService.getMovieById(id);
     },
     retry: false,
     refetchOnWindowFocus: false,
@@ -36,9 +30,7 @@ function MovieDetails() {
     return;
   }
 
-  const [serverMovieDetails, recommendations] = data;
-
-  const movieDetails = mapServerMovieDetailsToMovieDetails(serverMovieDetails);
+  const movieDetails = mapServerMovieDetailsToMovieDetails(data);
 
   return (
     <article>
@@ -56,16 +48,7 @@ function MovieDetails() {
         src={movieDetails.posterUrl}
         alt={`Постер для фильма ${movieDetails.title}`}
       />
-      <ul>
-        <h2>Похожие фильмы</h2>
-        <ul>
-          {recommendations.results.map((recommendation) => (
-            <li key={recommendation.id}>
-              <MoviePreview movie={mapServerMovieToMovie(recommendation)} />
-            </li>
-          ))}
-        </ul>
-      </ul>
+      {id && <MovieRecommendationsList id={id} />}
     </article>
   );
 }
