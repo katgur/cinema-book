@@ -6,6 +6,7 @@ import PaginationView from "../PaginationView";
 import { useState } from "react";
 import style from "./style.module.scss";
 import Spinner from "../Spinner";
+import ErrorView from "../ErrorView";
 
 function MoviesList() {
   const [page, setPage] = useState<number>(1);
@@ -21,7 +22,7 @@ function MoviesList() {
   }
 
   if (error) {
-    return <p>{error.message}</p>;
+    return <ErrorView message={error.message} />;
   }
 
   if (!data) {
