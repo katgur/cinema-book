@@ -11,8 +11,9 @@ export function mapServerMovieToMovie(
   return {
     id: serverMovie.id,
     posterUrl: mapPosterUrl(serverMovie.poster_path),
-    releaseDate: serverMovie.release_date,
     title: serverMovie.title,
+    subtitle: mapSubtitle(serverMovie.original_title, serverMovie.release_date),
+    voteAverage: serverMovie.vote_average,
   };
 }
 
@@ -22,18 +23,30 @@ export function mapServerMovieDetailsToMovieDetails(
   return {
     id: serverMovie.id,
     posterUrl: mapPosterUrl(serverMovie.poster_path),
-    releaseDate: serverMovie.release_date,
     title: serverMovie.title,
+    subtitle: mapSubtitle(serverMovie.original_title, serverMovie.release_date),
+    releaseDate: mapDateToLocaleString(serverMovie.release_date),
+    voteAverage: serverMovie.vote_average,
     overview: serverMovie.overview,
     genres: serverMovie.genres.map((genre) => genre.name).join(", "),
-    budget: serverMovie.budget,
-    revenue: serverMovie.revenue,
-    runtime: serverMovie.runtime,
-    voteAverage: serverMovie.vote_average,
-    voteCount: serverMovie.vote_count,
+    budget: serverMovie.budget ? `$${serverMovie.budget}` : null,
+    revenue: serverMovie.revenue ? `$${serverMovie.revenue}` : null,
+    runtime: `${serverMovie.runtime} мин`,
   };
 }
 
+function mapSubtitle(originalTitle: string, releaseDate: string): string {
+  return `${originalTitle}, ${releaseDate.split("-")[0]}`;
+}
+
 function mapPosterUrl(posterPath: string): string {
-  return `https://image.tmdb.org/t/p/w200${posterPath}`;
+  return `https://image.tmdb.org/t/p/w500${posterPath}`;
+}
+
+function mapDateToLocaleString(date: string): string {
+  return new Date(date).toLocaleDateString("ru", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }

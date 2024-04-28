@@ -1,0 +1,11 @@
+.title {
+  padding: 1rem;
+  width: 100%;
+
+  background-color: var(--primary-color);
+}
+
+.title > a {
+  color: var(--accent-text-color);
+  font-weight: 700;
+}

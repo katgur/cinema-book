@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  position: relative;
+}
+
+.image {
+  width: 150px;
+  height: 225px;
+}
+
+.content {
+  margin-left: 0.75em;
+  margin-bottom: auto;
+  width: 100%;
+}
+
+.subtitle {
+  margin-top: 0.25rem;
+
+  font-size: 0.9rem;
+  color: var(--secondary-text-color);
+}
+
+.rating {
+  margin-top: 0.5rem;
+  width: fit-content;
+  padding: 0.3rem;
+  border-radius: 0.1rem;
+
+  font-weight: 700;
+  color: var(--accent-text-color);
+}
+
+.ratingGood {
+  background-color: var(--rating-good-color);
+}
+
+.ratingAverage {
+  background-color: var(--rating-average-color);
+}
+
+.ratingBad {
+  background-color: var(--rating-bad-color);
+}
+
+.rating {
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

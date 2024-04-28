@@ -3,6 +3,8 @@ export type ServerMoviePreview = {
   title: string;
   poster_path: string;
   release_date: string;
+  original_title: string;
+  vote_average: number;
 };
 
 export type Genre = {
@@ -16,11 +18,9 @@ export type ServerMovieDetails = ServerMoviePreview & {
   budget: number;
   revenue: number;
   runtime: number;
-  vote_average: number;
-  vote_count: number;
 };
 
-export interface Pagination {
+interface Pagination {
   page: number;
   total_pages: number;
   total_results: number;
@@ -39,16 +39,16 @@ export type GetMovieRecommendationsResponse = Pagination & {
 export type MoviePreview = {
   id: number;
   posterUrl: string;
-  releaseDate: string;
   title: string;
+  subtitle: string;
+  voteAverage: number;
 };
 
 export type MovieDetails = MoviePreview & {
+  releaseDate: string;
   overview: string;
   genres: string;
-  budget: number;
-  revenue: number;
-  runtime: number;
-  voteAverage: number;
-  voteCount: number;
+  budget: string | null;
+  revenue: string | null;
+  runtime: string;
 };

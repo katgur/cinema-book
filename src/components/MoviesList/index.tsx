@@ -1,9 +1,12 @@
 import movieService from "../../services/movie";
 import { mapServerMovieToMovie } from "../../mappers";
-import MoviePreview from "../MoviePreview";
+import MoviePreviewView from "../MoviePreviewView";
 import { useQuery } from "@tanstack/react-query";
 import PaginationView from "../PaginationView";
 import { useState } from "react";
+import style from "./style.module.scss";
+import Spinner from "../Spinner";
+import ErrorView from "../ErrorView";
 
 function MoviesList() {
   const [page, setPage] = useState<number>(1);
@@ -15,11 +18,16 @@ function MoviesList() {
   });
 
   if (isPending) {
-    return <p>Loading...</p>;
+    return <Spinner />;
   }
 
   if (error) {
-    return <p>{error.message}</p>;
+    return (
+      <ErrorView
+        title="Не удалось загрузить список фильмов"
+        message={error.message}
+      />
+    );
   }
 
   if (!data) {
@@ -27,21 +35,23 @@ function MoviesList() {
   }
 
   return (
-    <article>
-      <h1>Лучшие фильмы</h1>
-      <PaginationView
-        page={data.page}
-        totalPages={data.total_pages}
-        onPageChanged={setPage}
-      />
-      <ul>
+    <section className={style.container}>
+      <h2 className={style.header}>Лучшие фильмы</h2>
+      <div className={style.pagination}>
+        <PaginationView
+          page={data.page}
+          totalPages={data.total_pages}
+          onPageChanged={setPage}
+        />
+      </div>
+      <ul className={style.list}>
         {data.results.map((movie) => (
-          <li key={movie.id}>
-            <MoviePreview movie={mapServerMovieToMovie(movie)} />
+          <li key={movie.id} className={style.item}>
+            <MoviePreviewView movie={mapServerMovieToMovie(movie)} />
           </li>
         ))}
       </ul>
-    </article>
+    </section>
   );
 }
 

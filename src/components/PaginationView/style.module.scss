@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  gap: 4px;
+}
+
+.page {
+  padding: 0.25rem 0.5rem;
+  height: 100%;
+
+  border-radius: 4px;
+  transition: all 250ms;
+}
+
+.pageNotSelected {
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.pageNotSelected:hover {
+  background-color: var(--active-primary-color);
+  border-color: var(--active-primary-color);
+  color: var(--accent-text-color);
+}
+
+.pageSelected {
+  background-color: var(--primary-color);
+  color: var(--accent-text-color);
+  cursor: auto;
+}
+
+.dots {
+  color: var(--primary-color);
+}

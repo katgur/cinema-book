@@ -83,7 +83,6 @@ export function isGetMovieByIdResponse(
     isString(response.title) &&
     isNumber(response.revenue) &&
     isNumber(response.runtime) &&
-    isNumber(response.vote_average) &&
-    isNumber(response.vote_count)
+    isNumber(response.vote_average)
   );
 }
