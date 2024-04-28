@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  gap: 4px;
+}
+
+.page {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.pageNotSelected {
+  background-color: white;
+  border: 1px solid orangered;
+  color: orangered;
+}
+
+.pageSelected {
+  background-color: orangered;
+  color: white;
+}

@@ -4,6 +4,7 @@ import movieService from "../../services/movie";
 import PaginationView from "../PaginationView";
 import MoviePreview from "../MoviePreview";
 import { mapServerMovieToMovie } from "../../mappers";
+import style from "./style.module.scss";
 
 function MovieRecommendationsList({ id }: { id: string }) {
   const [page, setPage] = useState<number>(1);
@@ -27,21 +28,21 @@ function MovieRecommendationsList({ id }: { id: string }) {
   }
 
   return (
-    <article>
-      <h1>Похожие фильмы</h1>
+    <section className={style.recommendations}>
+      <h2 className={style.titleSecondary}>Похожие фильмы</h2>
       <PaginationView
         page={data.page}
         totalPages={data.total_pages}
         onPageChanged={setPage}
       />
-      <ul>
+      <ul className={style.list}>
         {data.results.map((recommendation) => (
-          <li key={recommendation.id}>
+          <li key={recommendation.id} className={style.item}>
             <MoviePreview movie={mapServerMovieToMovie(recommendation)} />
           </li>
         ))}
       </ul>
-    </article>
+    </section>
   );
 }
 

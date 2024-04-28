@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  position: relative;
 }
 
 .image {
@@ -42,15 +43,9 @@
   background-color: red;
 }
 
-@media (min-width: 768px) {
-  .content {
-    position: relative;
-  }
-
-  .rating {
-    margin: 0;
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
+.rating {
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
 }

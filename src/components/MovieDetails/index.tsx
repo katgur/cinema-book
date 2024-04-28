@@ -47,10 +47,10 @@ function MovieDetailsView() {
 
   return (
     <section className={style.container}>
-      <article className={style.movieCard}>
+      <div className={style.movieCard}>
         <div className={style.content}>
-          <h1 className={style.title}>{movieDetails.title}</h1>
-          <h2 className={style.subtitle}>{movieDetails.subtitle}</h2>
+          <h2 className={style.title}>{movieDetails.title}</h2>
+          <h3 className={style.subtitle}>{movieDetails.subtitle}</h3>
           <p className={style.text}>{movieDetails.overview}</p>
           <ul className={style.list}>
             <li>Жанр: {movieDetails.genres}</li>
@@ -66,7 +66,7 @@ function MovieDetailsView() {
           src={movieDetails.posterUrl}
           alt={`Постер для фильма ${movieDetails.title}`}
         />
-      </article>
+      </div>
       {id && <MovieRecommendationsList id={id} />}
     </section>
   );

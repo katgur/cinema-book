@@ -1,3 +1,5 @@
+import style from "./style.module.scss";
+
 function calcPages(page: number, totalPages: number) {
   const siblingCount = 1;
   const boundary = 3;
@@ -57,7 +59,7 @@ function PaginationView({
 }: PaginationViewProps) {
   const pagination = calcPages(page, totalPages);
   return (
-    <ul style={{ display: "flex" }}>
+    <ul className={style.container}>
       {pagination.map((paginationCell, index) => {
         return (
           <li key={paginationCell + index}>
@@ -65,9 +67,7 @@ function PaginationView({
               "..."
             ) : (
               <button
-                style={{
-                  backgroundColor: page === paginationCell ? "blue" : "gray",
-                }}
+                className={`${style.page} ${page === paginationCell ? style.pageSelected : style.pageNotSelected}`}
                 onClick={() => onPageChanged(paginationCell)}
               >
                 {paginationCell}
