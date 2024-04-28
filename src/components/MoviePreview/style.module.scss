@@ -18,7 +18,7 @@
   margin-top: 0.25rem;
 
   font-size: 0.9rem;
-  color: var(--secondary-text);
+  color: var(--secondary-text-color);
 }
 
 .rating {
@@ -28,19 +28,19 @@
   border-radius: 0.1rem;
 
   font-weight: 700;
-  color: white;
+  color: var(--accent-text-color);
 }
 
 .ratingGood {
-  background-color: green;
+  background-color: var(--rating-good-color);
 }
 
 .ratingAverage {
-  background-color: orange;
+  background-color: var(--rating-average-color);
 }
 
 .ratingBad {
-  background-color: red;
+  background-color: var(--rating-bad-color);
 }
 
 .rating {

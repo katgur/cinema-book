@@ -6,15 +6,27 @@
 .page {
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
+  transition: all 250ms;
 }
 
 .pageNotSelected {
-  background-color: white;
-  border: 1px solid orangered;
-  color: orangered;
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.pageNotSelected:hover {
+  background-color: var(--active-primary-color);
+  border-color: var(--active-primary-color);
+  color: var(--accent-text-color);
 }
 
 .pageSelected {
-  background-color: orangered;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--accent-text-color);
+  cursor: auto;
+}
+
+.dots {
+  color: var(--primary-color);
 }

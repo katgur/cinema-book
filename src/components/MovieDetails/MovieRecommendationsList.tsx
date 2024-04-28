@@ -35,7 +35,7 @@ function MovieRecommendationsList({ id }: { id: string }) {
         totalPages={data.total_pages}
         onPageChanged={setPage}
       />
-      <ul className={style.list}>
+      <ul className={style.recommendationsList}>
         {data.results.map((recommendation) => (
           <li key={recommendation.id} className={style.item}>
             <MoviePreview movie={mapServerMovieToMovie(recommendation)} />

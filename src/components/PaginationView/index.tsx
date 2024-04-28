@@ -64,7 +64,7 @@ function PaginationView({
         return (
           <li key={paginationCell + index}>
             {paginationCell === -1 ? (
-              "..."
+              <span className={style.dots}>...</span>
             ) : (
               <button
                 className={`${style.page} ${page === paginationCell ? style.pageSelected : style.pageNotSelected}`}
