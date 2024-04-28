@@ -11,8 +11,9 @@ export function mapServerMovieToMovie(
   return {
     id: serverMovie.id,
     posterUrl: mapPosterUrl(serverMovie.poster_path),
-    releaseDate: serverMovie.release_date,
     title: serverMovie.title,
+    subtitle: `${serverMovie.original_title}, ${serverMovie.release_date.split("-")[0]}`,
+    voteAverage: serverMovie.vote_average,
   };
 }
 
@@ -22,15 +23,16 @@ export function mapServerMovieDetailsToMovieDetails(
   return {
     id: serverMovie.id,
     posterUrl: mapPosterUrl(serverMovie.poster_path),
-    releaseDate: serverMovie.release_date,
     title: serverMovie.title,
+    originalTitle: serverMovie.original_title,
+    releaseDate: serverMovie.release_date,
+    voteAverage: serverMovie.vote_average,
+    voteCount: serverMovie.vote_count,
     overview: serverMovie.overview,
     genres: serverMovie.genres.map((genre) => genre.name).join(", "),
     budget: serverMovie.budget,
     revenue: serverMovie.revenue,
     runtime: serverMovie.runtime,
-    voteAverage: serverMovie.vote_average,
-    voteCount: serverMovie.vote_count,
   };
 }
 

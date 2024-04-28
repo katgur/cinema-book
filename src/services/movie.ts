@@ -45,9 +45,11 @@ async function getMovieById(id: string): Promise<GetMovieByIdResponse> {
 
 async function getMovieRecommendations(
   id: string,
-  page: number,
+  page: number
 ): Promise<GetMovieRecommendationsResponse> {
-  const response = await axios.get(`${url}/${id}/recommendations?language=ru&page=${page}`);
+  const response = await axios.get(
+    `${url}/${id}/recommendations?language=ru&page=${page}`
+  );
   const data = response.data;
   if (!isGetTopMoviesResponse(data)) {
     throw new Error("Wrong data from server");

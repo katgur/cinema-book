@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 768px) {
+    width: 768px;
+    margin: 0 auto;
+  }
+}
+
+.header {
+  margin: 1.5rem;
+  margin-top: 25%;
+
+  font-size: 3rem;
+}
+
+.pagination {
+  margin: 0 1.5rem;
+}
+
+.list {
+  margin-top: 1rem;
+}
+
+.item {
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.item:last-child {
+  border-bottom: 0;
+}

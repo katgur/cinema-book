@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+}
+
+.image {
+  width: 150px;
+  height: 225px;
+}
+
+.content {
+  margin-left: 0.75em;
+  margin-bottom: auto;
+  width: 100%;
+}
+
+.subtitle {
+  margin-top: 0.25rem;
+
+  font-size: 0.9rem;
+  color: var(--secondary-text);
+}
+
+.rating {
+  margin-top: 0.5rem;
+  width: fit-content;
+  padding: 0.3rem;
+  border-radius: 0.1rem;
+
+  font-weight: 700;
+  color: white;
+}
+
+.ratingGood {
+  background-color: green;
+}
+
+.ratingAverage {
+  background-color: orange;
+}
+
+.ratingBad {
+  background-color: red;
+}
+
+@media (min-width: 768px) {
+  .content {
+    position: relative;
+  }
+
+  .rating {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
