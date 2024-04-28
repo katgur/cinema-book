@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import PaginationView from "../PaginationView";
 import { useState } from "react";
 import style from "./style.module.scss";
+import Spinner from "../Spinner";
 
 function MoviesList() {
   const [page, setPage] = useState<number>(1);
@@ -16,7 +17,7 @@ function MoviesList() {
   });
 
   if (isPending) {
-    return <p>Loading...</p>;
+    return <Spinner />;
   }
 
   if (error) {
