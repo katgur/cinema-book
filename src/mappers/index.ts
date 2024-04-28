@@ -24,6 +24,7 @@ export function mapServerMovieDetailsToMovieDetails(
     id: serverMovie.id,
     posterUrl: mapPosterUrl(serverMovie.poster_path),
     title: serverMovie.title,
+    subtitle: `${serverMovie.original_title}, ${serverMovie.release_date.split("-")[0]}`,
     originalTitle: serverMovie.original_title,
     releaseDate: serverMovie.release_date,
     voteAverage: serverMovie.vote_average,
@@ -37,5 +38,5 @@ export function mapServerMovieDetailsToMovieDetails(
 }
 
 function mapPosterUrl(posterPath: string): string {
-  return `https://image.tmdb.org/t/p/w200${posterPath}`;
+  return `https://image.tmdb.org/t/p/w500${posterPath}`;
 }

@@ -45,7 +45,7 @@ export type MoviePreview = {
   voteAverage: number;
 };
 
-export type MovieDetails = Omit<MoviePreview, "subtitle"> & {
+export type MovieDetails = MoviePreview & {
   originalTitle: string;
   releaseDate: string;
   overview: string;

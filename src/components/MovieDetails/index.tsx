@@ -3,8 +3,9 @@ import { mapServerMovieDetailsToMovieDetails } from "../../mappers";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import MovieRecommendationsList from "./MovieRecommendationsList";
+import style from "./style.module.scss";
 
-function MovieDetails() {
+function MovieDetailsView() {
   const { id } = useParams();
   const { isPending, error, data } = useQuery({
     queryKey: ["movie", id],
@@ -19,11 +20,11 @@ function MovieDetails() {
   });
 
   if (isPending) {
-    return <p>Loading...</p>;
+    return <li>Loading...</li>;
   }
 
   if (error) {
-    return <p>{error.message}</p>;
+    return <li>{error.message}</li>;
   }
 
   if (!data) {
@@ -32,25 +33,43 @@ function MovieDetails() {
 
   const movieDetails = mapServerMovieDetailsToMovieDetails(data);
 
+  // const movieDetails: MovieDetails = {
+  //   title: "Title",
+  //   subtitle: "Original Title, 2020",
+  //   releaseDate: "2020-13-02",
+  //   overview: "Overview",
+  //   genres: "Genres",
+  //   budget: 123,
+  //   runtime: 234,
+  //   voteAverage: 8.5,
+  //   voteCount: 1443,
+  // };
+
   return (
-    <article>
-      <h1>{movieDetails.title}</h1>
-      <p>{movieDetails.overview}</p>
-      <p>Жанр: {movieDetails.genres}</p>
-      <p>Бюджет: ${movieDetails.budget}</p>
-      <p>Выручка: ${movieDetails.revenue}</p>
-      <p>Дата релиза: {movieDetails.releaseDate}</p>
-      <p>Продолжительность: {movieDetails.runtime} минуты</p>
-      <p>
-        {movieDetails.voteAverage} / {movieDetails.voteCount}
-      </p>
-      <img
-        src={movieDetails.posterUrl}
-        alt={`Постер для фильма ${movieDetails.title}`}
-      />
+    <section className={style.container}>
+      <article className={style.movieCard}>
+        <div className={style.content}>
+          <h1 className={style.title}>{movieDetails.title}</h1>
+          <h2 className={style.subtitle}>{movieDetails.subtitle}</h2>
+          <p className={style.text}>{movieDetails.overview}</p>
+          <ul className={style.list}>
+            <li>Жанр: {movieDetails.genres}</li>
+            <li>Бюджет: ${movieDetails.budget}</li>
+            <li>Выручка: ${movieDetails.revenue}</li>
+            <li>Дата релиза: {movieDetails.releaseDate}</li>
+            <li>Продолжительность: {movieDetails.runtime} минуты</li>
+            <li>Рейтинг: {movieDetails.voteAverage}</li>
+          </ul>
+        </div>
+        <img
+          className={style.image}
+          src={movieDetails.posterUrl}
+          alt={`Постер для фильма ${movieDetails.title}`}
+        />
+      </article>
       {id && <MovieRecommendationsList id={id} />}
-    </article>
+    </section>
   );
 }
 
-export default MovieDetails;
+export default MovieDetailsView;

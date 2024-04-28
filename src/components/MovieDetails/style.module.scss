@@ -1,0 +1,33 @@
+.container {
+  padding: 1.5rem;
+  padding-top: 10%;
+}
+
+.movieCard {
+  display: flex;
+}
+
+.content {
+  margin-right: 1rem;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.subtitle {
+  font-weight: 400;
+  font-size: 1rem;
+  color: var(--secondary-text);
+}
+
+.text {
+  margin-top: 1.75rem;
+}
+
+.image {
+  margin-left: auto;
+  margin-bottom: auto;
+  width: 300px;
+  height: 450px;
+}
